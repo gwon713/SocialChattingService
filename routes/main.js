@@ -34,7 +34,7 @@ router.get("/signUp", (req, res) => {
 });
 
 router.post('/login', (req, res) => {//login 요청
-    var sql = 'SELECT * FROM user WHERE id=? and password=?';
+    var sql = 'select * from user where id=? and password=?';
     var user_id = req.body.id;
     var password = req.body.password;
     var data = [user_id, password];
@@ -59,7 +59,7 @@ router.post('/login', (req, res) => {//login 요청
 });
 
 router.post("/signUp", (req, res) => {//회원가입 요청
-    var sql = 'INSERT INTO USER VALUES (null,?,?,now(),0)';
+    var sql = 'insert into user values (null,?,?,now(),0)';
     var data = [req.body.id, req.body.password];
     if(req.body.id=="")
         data[0] = null;

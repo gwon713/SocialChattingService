@@ -102,7 +102,7 @@ router.get("/:id/frdList", (req, res) => {//친구 목록
 
 
 router.post("/:id/frdreq", (req, res) => {//친구신청
-    var sql = 'INSERT INTO friendshipreq VALUES (null,?,?,0)';
+    var sql = 'insert into friendshipreq values (null,?,?,0)';
     var from_id = req.params.id;
     var to_id = req.body.frdreqBtn;
     var data = [from_id, to_id];
@@ -132,14 +132,13 @@ router.put("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락
     });
 });
 
-
-router.delete("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락 하면 필요없는 요청 삭제하기
-    var sql = 'delete from friendshipreq where from_id in (?,?) and to_id in (?,?)and enable = 0'
-    var from_id = req.params.id;
-    var to_id = req.body.AcceptBtn;
-    var data = [from_id, to_id,from_id, to_id];
+router.post("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락  sql from_id to_id 바꿔서 집어넣기
+    var sql = 'insert into friendshipreq values (null,?,?,1)';
+    var from_id = req.body.AcceptBtn;
+    var to_id = req.params.id;
+    var data = [to_id,from_id];
     connection.query(sql, data, function (err, result, fields) {
-        console.log("친구요청수락 delete data : "+data);
+        console.log("친구요청수락 post data : "+data);
         if (err) {
             console.log('frdreqAcpt err :' + err);
             return res.send(err);
@@ -148,14 +147,13 @@ router.delete("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락 하면 �
     });
 });
 
-
-router.post("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락  sql from_id to_id 바꿔서 집어넣기
-    var sql = 'INSERT INTO friendshipreq VALUES (null,?,?,1)';
-    var from_id = req.body.AcceptBtn;
-    var to_id = req.params.id;
-    var data = [to_id,from_id];
+router.delete("/:id/frdreqAcpt", (req, res) => {//친구 요청 수락 하면 필요없는 요청 삭제하기
+    var sql = 'delete from friendshipreq where from_id in (?,?) and to_id in (?,?)and enable = 0'
+    var from_id = req.params.id;
+    var to_id = req.body.AcceptBtn;
+    var data = [from_id, to_id,from_id, to_id];
     connection.query(sql, data, function (err, result, fields) {
-        console.log("친구요청수락 post data : "+data);
+        console.log("친구요청수락 delete data : "+data);
         if (err) {
             console.log('frdreqAcpt err :' + err);
             return res.send(err);
