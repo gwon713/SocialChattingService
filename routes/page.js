@@ -40,6 +40,9 @@ router.get("/:id/friendsReq", (req, res) => {
 router.get("/:id/friendsList", (req, res) => {
     res.render('friendsList')
 });
+router.get("/:id/dm", (req, res) => {
+    res.render('dm')
+});
 
 
 
